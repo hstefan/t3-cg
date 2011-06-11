@@ -86,6 +86,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\math\transform3d.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\math\math.hpp" />
+    <ClInclude Include="src\math\matrix.hpp" />
+    <ClInclude Include="src\math\transform.hpp" />
+    <ClInclude Include="src\math\transform3d.hpp" />
+    <ClInclude Include="src\math\vector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
