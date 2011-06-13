@@ -39,13 +39,15 @@ int main()
 {
    scv::Kernel* ker = scv::Kernel::getInstance();
    scv::ColorScheme* scheme = scv::ColorScheme::getInstance();
-   scheme->loadScheme(scv::ColorScheme::scvDefault);
+   scheme->loadScheme(scv::ColorScheme::clean);
    ker->setWindowSize(800, 600);
    hstefan::gui::SidePanel* panel = new hstefan::gui::SidePanel(scv::Point(10, 600 - 65), scv::Point(375, 600 - 10));
+   hstefan::gui::SceneCanvas* canvas = new hstefan::gui::SceneCanvas(scv::Point(0,0), scv::Point(800, 600));
    panel->setOrthoFunction(&test);
    panel->setPersFunction(&test);
    //scv::Button* b = new scv::Button(scv::Point(400, 300), "Clique!");
    //ker->addComponent(b);
+   ker->addComponent(canvas);
    ker->addComponent(panel);
    ker->setFramesPerSecond(30.f);
    ker->run();

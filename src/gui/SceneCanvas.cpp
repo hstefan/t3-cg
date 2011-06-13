@@ -39,7 +39,13 @@ void SceneCanvas::update( void )
 
 void SceneCanvas::render( void ) 
 {
-   //throw std::exception("The method or operation is not implemented.");
+   glColor3f(1.0f, 0.f, 0.f);
+   glBegin(GL_QUADS);
+      glVertex2f(200.f, 400.f);
+      glVertex2f(400.f, 400.f);
+      glVertex2f(400.f, 200.f);
+      glVertex2f(200.f, 200.f);
+   glEnd();
 }
 
 void SceneCanvas::onKeyUp( const scv::KeyEvent &evt ) 
