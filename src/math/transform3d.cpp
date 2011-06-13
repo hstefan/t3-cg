@@ -69,7 +69,7 @@ mat4d rollRotationMatrix(float angle)
 }
 mat4d translationMatrix(float tx, float ty, float tz)
 {
-   mat4d m {
+   mat4d m = {
       {
          1, 0, 0, tx,
          0, 1, 0, ty,
@@ -81,11 +81,11 @@ mat4d translationMatrix(float tx, float ty, float tz)
 }
 mat4d scaleMatrix(float sx, float sy, float sz)
 {
-   mat4d m {
+   mat4d m  = {
       {
-            sx, 0  , 0 , tx,
-            0 , sy , 0 , ty,
-            0 , 0  , sz, tz,
+            sx, 0  , 0 , sx,
+            0 , sy , 0 , sy,
+            0 , 0  , sz, sz,
             0,  0  , 0 ,  1
       }
    };
