@@ -31,36 +31,32 @@
 
 namespace hstefan
 {
-namespace gui
-{
+namespace gui {
 //Classe de visualizacao
 class SceneCanvas : public scv::Canvas
 {
 public:
-   virtual void update( void ) 
-   {
-      throw std::exception("The method or operation is not implemented.");
-   }
+   //teclas para translacao
+   static const char MOVE_FORWARD_K   = 'w';
+   static const char MOVE_LEFT_K      = 'a';
+   static const char MOVE_BACKWARD_K  = 's';
+   static const char MOVE_RIGHT_K     = 'd';
+   static const char MOVE_UPWARD_K    = 'r';
+   static const char MOVE_DOWNWARD_K  = 'f';
 
-   virtual void render( void ) 
-   {
-      throw std::exception("The method or operation is not implemented.");
-   }
+   //teclas para rotacao
+   static const char CLOCKWISE_YAW_K    = 'u';
+   static const char ANTICLOCKW_YAW_K   = 'i';
+   static const char CLOCKWISE_PITCH_K  = 'j';
+   static const char ANTICLOCKW_PITCH_K = 'k';
+   static const char CLOCKWISE_ROLL_K   = 'n';
+   static const char ANTICLOCKW_ROLL_K  = 'm';
 
-   virtual void onKeyUp( const scv::KeyEvent &evt ) 
-   {
-      throw std::exception("The method or operation is not implemented.");
-   }
-
-   virtual void onMouseWheel( const scv::MouseEvent &evt ) 
-   {
-      throw std::exception("The method or operation is not implemented.");
-   }
-
-   virtual void onKeyPressed( const scv::KeyEvent &evt ) 
-   {
-      throw std::exception("The method or operation is not implemented.");
-   }
+   void update( void );
+   void render( void );
+   void onKeyUp( const scv::KeyEvent &evt );
+   void onMouseWheel( const scv::MouseEvent &evt );
+   void onKeyPressed( const scv::KeyEvent &evt ) ;
 };
 
 } //namespace gui
