@@ -28,6 +28,12 @@
 #include <SCV/Kernel.h>
 #include "gui/SceneCanvas.hpp"
 #include "gui/SidePanel.hpp"
+#include <iostream>
+
+void test()
+{
+   std::cout << "Hey there." << std::endl;
+}
 
 int main() 
 {
@@ -35,7 +41,7 @@ int main()
    scv::ColorScheme* scheme = scv::ColorScheme::getInstance();
    scheme->loadScheme(scv::ColorScheme::clean);
    ker->setWindowSize(800, 600);
-
+   hstefan::gui::SidePanel<&test,&test>* panel = new hstefan::gui::SidePanel<&test,&test>();
    scv::Button* b = new scv::Button(scv::Point(400, 300), "Clique!");
    ker->addComponent(b);
    ker->setFramesPerSecond(30.f);
