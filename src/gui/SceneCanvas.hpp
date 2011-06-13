@@ -52,6 +52,8 @@ public:
    static const char CLOCKWISE_ROLL_K   = 'n';
    static const char ANTICLOCKW_ROLL_K  = 'm';
 
+   SceneCanvas(const scv::Point& po, const scv::Point& pf);
+
    void update( void );
    void render( void );
    void onKeyUp( const scv::KeyEvent &evt );

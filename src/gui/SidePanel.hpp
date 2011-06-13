@@ -24,20 +24,23 @@
  * Matricula: 2910182
  */
 
-#include <SCV/Button.h>
-#include <SCV/Kernel.h>
-#include "gui/SceneCanvas.hpp"
-#include "gui/SidePanel.hpp"
+#ifndef HSTEFAN_SIDE_PANEL_HPP
+#define HSTEFAN_SIDE_PANEL_HPP
 
-int main() 
+#include <SCV/Panel.h>
+
+namespace hstefan
 {
-   scv::Kernel* ker = scv::Kernel::getInstance();
-   scv::ColorScheme* scheme = scv::ColorScheme::getInstance();
-   scheme->loadScheme(scv::ColorScheme::clean);
-   ker->setWindowSize(800, 600);
+namespace gui
+{
 
-   scv::Button* b = new scv::Button(scv::Point(400, 300), "Clique!");
-   ker->addComponent(b);
-   ker->setFramesPerSecond(30.f);
-   ker->run();
-}
+class SidePanel : public scv::Panel
+{
+public:
+   SidePanel(const scv::Point& po, const scv::Point& pf);
+};
+
+} //namespace gui
+} //namespace hstefan
+
+#endif
