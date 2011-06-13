@@ -36,47 +36,40 @@ namespace hstefan
 namespace gui
 {
 
-template <void F(), void G()> //T seria a funcao/classe 
 class SidePanel : public scv::Panel
 {
 public:
    static const int PERSPECTIVE_PROJECTION_INDEX = 0;
    static const int ORTHOGRAPHIC_PROJECTION_INDEX = 1;
    
-   static const int DEFAULT_MARGIN = 20;
+   static const int DEFAULT_MARGIN = 10;
 
    SidePanel(const scv::Point& po, const scv::Point& pf);
+   ~SidePanel();
 
-   void onMouseUp( const scv::MouseEvent &evt ) {}
+   void onMouseClick(const scv::MouseEvent &evt );
+   inline void setOrthoFunction(void (*ortho_f)());
+   inline void setPersFunction(void (*pers_f)());
 private:
-   scv::ButtonGroup group; //radio buttons para selecionar o tipo da projecao
+   scv::ButtonGroup* group; //radio buttons para selecionar o tipo da projecao
    scv::RadioButton* pers;
    scv::RadioButton* ortho;
-   scv::Label* label;
+   void (*ortho_f)();
+   void (*pers_f)();
+   scv::Label* label_top;
+   scv::Label* label_middle;
+   scv::Label* label_bottom;
    int last_choice;
 };
 
-template <typename F, typename G>
-SidePanel<F,G>::SidePanel(const scv::Point& po, const scv::Point& pf)
-   : scv::Panel(po, pf), group(), pers(0), ortho(0), label(0), last_choice(0)
+void SidePanel::setOrthoFunction(void (*ortho_f)()) 
 {
-   last_choice = -1;
-   scv::Point p = po;
-   p.translateX(DEFAULT_MARGIN);
-   p.translateY(DEFAULT_MARGIN);
-   pers = new scv::RadioButton(p, true,  "Perspectiva");
-   p.translateY(pers.getHeight() + DEFAULT_MARGIN);
-   ortho = new  scv::RadioButton(p, false, "Ortogonal");
-   p.translateY(-(pers->getHeight() + DEFAULT_MARGIN));
-   label = new scv::Label (p, "W/S - Frente/Tras         U/I - Yaw horario/anti\n" +
-                              "A/D - Direita/Esquerda    J/K - Pitch horario/anti\n" + 
-                              "R/F - Cima/Baixo          N/M - Roll horario/anti\n");
-   group._componentsArray.push_back(pers);
-   group._componentsArray.push_back(ortho);
-   addComponent(pers);
-   addComponent(ortho);
-   addComponent(label);
-   F();
+   this->ortho_f = ortho_f;
+}
+
+void SidePanel::setPersFunction(void (*pers_f)()) 
+{
+   this->pers_f = pers_f;
 }
 
 } //namespace gui

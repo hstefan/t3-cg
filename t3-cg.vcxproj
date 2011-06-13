@@ -86,6 +86,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\gui\SceneCanvas.cpp" />
+    <ClCompile Include="src\gui\SidePanel.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\math\transform3d.cpp" />
   </ItemGroup>
