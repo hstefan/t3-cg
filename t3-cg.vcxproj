@@ -89,6 +89,7 @@
     <ClCompile Include="src\gui\SidePanel.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\math\transform3d.cpp" />
+    <ClCompile Include="src\util\TransformStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gui\SceneCanvas.hpp" />
