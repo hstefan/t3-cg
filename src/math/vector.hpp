@@ -48,12 +48,12 @@ float dot(const matrix<N, 1>& v1, const matrix<N, 1>& v2)
    return ret;
 }
 
-inline vec3 cross(const vec3& v1, const vec3& v2)
+inline vec3 cross(const vec3& v, const vec3& u)
 {
    vec3 res = {{
-      v1[1]*v2[2] - v2[1]*v1[2],
-         v1[2]*v2[0] - v2[2]*v1[0],
-         v1[1]*v2[0] - v2[1]*v1[0] 
+      v[1]*u[2] - u[1]*v[2],
+      v[2]*u[0] - u[2]*v[0],
+      v[0]*u[1] - u[0]*v[1]
    }};
 
    return res;
@@ -132,7 +132,7 @@ inline matrix<M + 1, 1> homogen(const matrix<M, 1>& v, float w = 1)
    matrix<M + 1, 1> res;
    for(unsigned int i = 0; i < M; ++i)
       res[i] = v[i];
-   res[M - 1] = w;
+   res[M] = w;
    return res;
 }
 
