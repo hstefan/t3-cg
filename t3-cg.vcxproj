@@ -95,6 +95,7 @@
   <ItemGroup>
     <ClInclude Include="src\gui\SceneCanvas.hpp" />
     <ClInclude Include="src\gui\SidePanel.hpp" />
+    <ClInclude Include="src\math\camera.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\matrix.hpp" />
     <ClInclude Include="src\math\projection.hpp" />
