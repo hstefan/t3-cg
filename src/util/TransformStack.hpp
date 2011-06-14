@@ -77,7 +77,7 @@ template <class InputIterator>
 void TransformStack::setVertexGroup(InputIterator begin, InputIterator end)
 {
    vertex_buff.clear();
-   vertex_buff.insert(begin, end);
+   vertex_buff.assign(begin, end);
    out_buff->resize(vertex_buff.size());
 }
 
