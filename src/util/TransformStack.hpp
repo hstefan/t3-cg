@@ -48,7 +48,7 @@ public:
    TransformStack();
 
    template <class InputIterator>
-   void setVertex(InputIterator begin, InputIterator end);
+   void setVertexGroup(InputIterator begin, InputIterator end);
 
    void pushYaw(float angle);
    void pushRoll(float angle);
@@ -71,6 +71,14 @@ TransformStack::TransformStack(InputIterator begin, InputIterator end)
    out_buff = new std::vector<vertex_type>();
    out_buff->reserve(vertex_buff.size());
    //transformations.push(math::identityMatrix());
+}
+
+template <class InputIterator>
+void TransformStack::setVertexGroup(InputIterator begin, InputIterator end)
+{
+   vertex_buff.clear();
+   vertex_buff.insert(begin, end);
+   out_buff->resize(vertex_buff.size());
 }
 
 } //namespace util

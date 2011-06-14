@@ -29,6 +29,11 @@
 
 using namespace hstefan::util;
 
+TransformStack::TransformStack()
+   : out_buff(new std::vector<vertex_type>()), vertex_buff(), transformations()
+{
+}
+
 void TransformStack::pushYaw(float angle)
 {
    pushCustom(math::yawRotationMatrix(angle));
