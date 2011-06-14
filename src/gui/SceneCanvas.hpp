@@ -63,9 +63,17 @@ public:
    void onKeyPressed(const scv::KeyEvent &evt);
 protected:
    void loadModel();
+   void initCam();
+   struct Camera
+   {
+      math::vec3 up;
+      math::vec3 center;
+      math::vec3 eye;
+   };
 private:
    util::TransformStack trans;
    std::vector<math::vec3> model;
+   Camera cam;
 };
 
 } //namespace gui

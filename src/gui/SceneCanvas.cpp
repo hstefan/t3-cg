@@ -26,6 +26,7 @@
 
 #include "SceneCanvas.hpp"
 #include "../math/projection.hpp"
+#include "../math/camera.hpp"
 
 using namespace hstefan::gui;
 using namespace hstefan::math;
@@ -34,6 +35,7 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
    : Canvas(po, pf), trans(), model()
 {
    loadModel();
+   initCam();
    trans.setVertexGroup(model.begin(), model.end());
 }
 
@@ -49,7 +51,7 @@ void SceneCanvas::render( void )
    trans.pushTranslate(400, 400, 20);
    
    //view/camera transform
-
+   trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up));
    //projection transform
    trans.pushCustom(orthogonalProj());
    
@@ -153,5 +155,11 @@ void SceneCanvas::loadModel()
    model.push_back(makeVec(0.5f, 0.5f, -0.5f));
    model.push_back(makeVec(0.5f, -0.5f, -0.5f));
    model.push_back(makeVec(-0.5f, -0.5f, -0.5f));
-   
+}
+
+void SceneCanvas::initCam()
+{
+   cam.up = makeVec(0.f, 1.f, 0.f);
+   cam.center = makeVec(0.f, 0.f, 0.f);
+   cam.eye = makeVec(0.f, 0.f, 0.f);
 }
