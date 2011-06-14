@@ -39,7 +39,7 @@ namespace util
 class TransformStack
 {
 public:
-   typedef math::vec4 vertex_type;
+   typedef math::vec3 vertex_type;
    typedef math::mat4d transf_type;
 
    template <class InputIterator>
@@ -51,7 +51,7 @@ public:
    //void pushProjection(); //TODO
    void pushScale(float sx, float sy, float sz);
    void pushTranslate(float tx, float ty, float tz);
-   
+   void pushCustom(const transf_type& custom_transf);
    const std::vector<vertex_type>* const apply();
 private:
    std::vector<vertex_type>* out_buff;
@@ -59,6 +59,14 @@ private:
    std::deque<transf_type> transformations;
    bool changed; //indica se houve alguma adicao/remocao de transformacao desde a ultima chamada de apply 
 };
+
+template <class InputIterator>
+TransformStack::TransformStack(InputIterator begin, InputIterator end)
+   : out_buff(0), vertex_buff(begin, end), transformations(), changed(true)   
+{
+   out_buff = new std::vector<vertex_type>();
+   out_buff->reserve(vertex_buff.size());
+}
 
 } //namespace util
 } //namespace hstefanj

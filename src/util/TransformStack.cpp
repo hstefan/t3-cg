@@ -63,15 +63,16 @@ void TransformStack::pushCustom(const transf_type& custom_transf)
 const std::vector<TransformStack::vertex_type>* const TransformStack::apply()
 {
    math::mat4d res = math::identifyMatrix();
+
    auto end_it = transformations.rend();
    for(auto it = transformations.rbegin(); it != end_it; ++it)
       res = res * (*it);
+
    auto end_it_v = vertex_buff.end();
    out_buff->clear();
-   vertex_type aux;
    for(auto it = vertex_buff.begin(); it != end_it_v; ++it) 
-   {
-      out_buff->push_back((*it) * res);
-   }
-   return 0;
+      out_buff->push_back(math::unhomogen(res*math::homogen(*it)) );
+
+   changed = false;
+   return out_buff;
 }
