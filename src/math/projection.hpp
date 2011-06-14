@@ -33,7 +33,8 @@ namespace hstefan
 namespace math
 {
 mat4d orthogonalProj();
-mat4d perspecProj(float d = 1);
+mat4d perspecProj(float d = 1.f);
 } //namespace math
 } //namespace hstefan
+
 #endif
