@@ -59,6 +59,11 @@ void TransformStack::pushTranslate(float tx, float ty, float tz)
    pushCustom(math::translationMatrix(tx, ty, tz));
 }
 
+void TransformStack::pushTranslate(const math::vec3& v)
+{
+   pushTranslate(v[0], v[1], v[2]);
+}
+
 void TransformStack::pushCustom(const transf_type& custom_transf)
 {
    transformations.push(custom_transf);

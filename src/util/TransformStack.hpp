@@ -56,6 +56,7 @@ public:
    //void pushProjection(); //TODO
    void pushScale(float sx, float sy, float sz);
    void pushTranslate(float tx, float ty, float tz);
+   void pushTranslate(const math::vec3& v);
    void pushCustom(const transf_type& custom_transf);
    const std::vector<vertex_type>* const apply();
 private:
