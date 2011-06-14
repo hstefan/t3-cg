@@ -40,14 +40,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\debug\</OutDir>
-    <IntDir>$(SolutionDir)\bin\debug\intermediary</IntDir>
+    <IntDir>$(SolutionDir)\bin\debug\intermediary\</IntDir>
     <IncludePath>..\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\win32;..\lib\win32\scv;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\release</OutDir>
-    <IntDir>$(SolutionDir)\bin\release\intermediary</IntDir>
+    <OutDir>$(SolutionDir)\bin\release\</OutDir>
+    <IntDir>$(SolutionDir)\bin\release\intermediary\</IntDir>
     <IncludePath>..\include;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <LibraryPath>..\lib\win32;..\lib\win32\scv;$(LibraryPath)</LibraryPath>
