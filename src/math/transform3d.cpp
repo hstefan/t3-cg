@@ -92,7 +92,7 @@ mat4d scaleMatrix(float sx, float sy, float sz)
    return m;
 }
 
-mat4d identifyMatrix()
+hstefan::math::mat4d identityMatrix()
 {
    return scaleMatrix(1.f, 1.f, 1.f);
 }
