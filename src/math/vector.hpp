@@ -126,6 +126,34 @@ inline float angle2dh(const vec2 v, const vec2 u)
    
    return acos(dt/n);
 }
+template <unsigned int M>
+inline matrix<M + 1, 1> homogen(const matrix<M, 1>& v, float w = 1)
+{
+   matrix<M + 1, 1> res;
+   for(unsigned int i = 0; i < M; ++i)
+      res[i] = v[i];
+   res[M - 1] = w;
+   return res;
+}
+
+template <unsigned int M>
+inline matrix<M - 1, 1> unhomogen(const matrix<M, 1>& v)
+{
+   matrix<M - 1, 1> res;
+   for(unsigned int i = 0; i < M - 1; ++i)
+      res[i] = v[i];
+   return res;
+}
+
+template <unsigned int M>
+matrix<M - 1, 1> operator matrix<M, 1>(const matrix<M, 1>& v)
+{
+   matrix<M - 1, 1> res;
+   for(unsigned int i = 0; i < M - 1; ++i)
+      res[i] = v[i];
+   return res;
+}
+
 
 } //namespace math
 } //namespace hstefan
