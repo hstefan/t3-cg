@@ -27,7 +27,7 @@
 
 using namespace hstefan::math;
 
-mat4d orthogonalProj()
+mat4d hstefan::math::orthogonalProj()
 {
    mat4d m = {{
       1, 0, 0, 0,
@@ -38,7 +38,7 @@ mat4d orthogonalProj()
    return m;
 }
 
-mat4d perspecProj(float d)
+mat4d hstefan::math::perspecProj(float d)
 {
    mat4d m = {{
       1, 0, 0, 0,
