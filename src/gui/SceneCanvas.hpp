@@ -32,7 +32,8 @@
 
 namespace hstefan
 {
-namespace gui {
+namespace gui 
+{
 //Classe de visualizacao
 class SceneCanvas : public scv::Canvas
 {
@@ -60,8 +61,11 @@ public:
    void onKeyUp(const scv::KeyEvent &evt);
    void onMouseWheel(const scv::MouseEvent &evt);
    void onKeyPressed(const scv::KeyEvent &evt);
+protected:
+   void loadModel();
 private:
-   util::TransformStack transforms;
+   util::TransformStack trans;
+   std::vector<math::vec3> model;
 };
 
 } //namespace gui

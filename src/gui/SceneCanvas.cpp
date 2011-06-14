@@ -25,12 +25,17 @@
  */
 
 #include "SceneCanvas.hpp"
+#include "../math/projection.hpp"
 
 using namespace hstefan::gui;
+using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf)
-{}
+   : Canvas(po, pf), trans(), model()
+{
+   loadModel();
+   trans.setVertexGroup(model.begin(), model.end());
+}
 
 void SceneCanvas::update( void )
 {
@@ -39,12 +44,59 @@ void SceneCanvas::update( void )
 
 void SceneCanvas::render( void ) 
 {
+   //model transform
+   trans.pushScale(100, 100, 100);
+   trans.pushTranslate(400, 400, 20);
+   
+   //view/camera transform
+
+   //projection transform
+   trans.pushCustom(orthogonalProj());
+   
+   //divide by w
+   //window transform
+   mat4d mat = {{
+      1, 0,     0    , 0,
+      0, 1,     0    , 0,
+      0, 0, 1.f/30.f , 0,
+      0, 0,     0    , 1
+   }};
+   trans.pushCustom(mat);
+
+   auto m = *(trans.apply());
+
    glColor3f(1.0f, 0.f, 0.f);
+
    glBegin(GL_QUADS);
-      glVertex2f(200.f, 400.f);
-      glVertex2f(400.f, 400.f);
-      glVertex2f(400.f, 200.f);
-      glVertex2f(200.f, 200.f);
+      glVertex2f(m[0][0], m[0][1]);
+      glVertex2f(m[1][0], m[1][1]);
+      glVertex2f(m[2][0], m[2][1]);
+      glVertex2f(m[0][0], m[3][1]);
+
+      glVertex2f(m[0][0], m[0][1]);
+      glVertex2f(m[4][0], m[4][1]);
+      glVertex2f(m[5][0], m[5][1]);
+      glVertex2f(m[1][0], m[1][1]);
+
+      glVertex2f(m[1][0], m[1][1]);
+      glVertex2f(m[5][0], m[5][1]);
+      glVertex2f(m[6][0], m[6][1]);
+      glVertex2f(m[2][0], m[2][1]);
+
+      glVertex2f(m[4][0], m[4][1]);
+      glVertex2f(m[5][0], m[5][1]);
+      glVertex2f(m[6][0], m[6][1]);
+      glVertex2f(m[7][0], m[7][1]);
+
+      glVertex2f(m[3][0], m[3][1]);
+      glVertex2f(m[7][0], m[7][1]);
+      glVertex2f(m[5][0], m[5][1]);
+      glVertex2f(m[2][0], m[2][1]);
+
+      glVertex2f(m[0][0], m[0][1]);
+      glVertex2f(m[4][0], m[4][1]);
+      glVertex2f(m[7][0], m[7][1]);
+      glVertex2f(m[3][0], m[3][1]);
    glEnd();
 }
 
@@ -86,4 +138,20 @@ void SceneCanvas::onKeyPressed( const scv::KeyEvent &evt )
    case ANTICLOCKW_ROLL_K  : // rotacao roll anticlockwise
       break;
    }
+}
+
+void SceneCanvas::loadModel()
+{
+   model.reserve(8);
+
+   model.push_back(makeVec(-0.5f, 0.5f, 0.5f));
+   model.push_back(makeVec(0.5f, 0.5f, 0.5f));
+   model.push_back(makeVec(0.5f, -0.5f, 0.5f));
+   model.push_back(makeVec(-0.5f, -0.5f, 0.5f));
+
+   model.push_back(makeVec(-0.5f, 0.5f, -0.5f));
+   model.push_back(makeVec(0.5f, 0.5f, -0.5f));
+   model.push_back(makeVec(0.5f, -0.5f, -0.5f));
+   model.push_back(makeVec(-0.5f, -0.5f, -0.5f));
+   
 }
