@@ -27,7 +27,7 @@
 #ifndef HSTEFAN_TRANSFORM_STACK_HPP
 #define HSTEFAN_TRANSFORM_STACK_HPP
 
-#include <deque>
+#include <stack>
 #include <vector>
 #include "../math/vector.hpp"
 
@@ -61,16 +61,16 @@ public:
 private:
    std::vector<vertex_type>* out_buff;
    std::vector<vertex_type> vertex_buff;
-   std::deque<transf_type> transformations;
-   bool changed; //indica se houve alguma adicao/remocao de transformacao desde a ultima chamada de apply 
+   std::stack<transf_type> transformations;
 };
 
 template <class InputIterator>
 TransformStack::TransformStack(InputIterator begin, InputIterator end)
-   : out_buff(0), vertex_buff(begin, end), transformations(), changed(true)   
+   : out_buff(0), vertex_buff(begin, end), transformations()  
 {
    out_buff = new std::vector<vertex_type>();
    out_buff->reserve(vertex_buff.size());
+   //transformations.push(math::identityMatrix());
 }
 
 } //namespace util

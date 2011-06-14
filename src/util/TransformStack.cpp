@@ -56,23 +56,21 @@ void TransformStack::pushTranslate(float tx, float ty, float tz)
 
 void TransformStack::pushCustom(const transf_type& custom_transf)
 {
-   transformations.push_back(custom_transf);
-   changed = true;
+   transformations.push(custom_transf);
 }
 
 const std::vector<TransformStack::vertex_type>* const TransformStack::apply()
 {
-   math::mat4d res = math::identifyMatrix();
-
-   auto end_it = transformations.rend();
-   for(auto it = transformations.rbegin(); it != end_it; ++it)
-      res = res * (*it);
-
+   math::mat4d res = math::identityMatrix();
+   while(!transformations.empty())
+   {
+      res = res * transformations.top();
+      transformations.pop();
+   }
    auto end_it_v = vertex_buff.end();
    out_buff->clear();
    for(auto it = vertex_buff.begin(); it != end_it_v; ++it) 
       out_buff->push_back(math::unhomogen(res*math::homogen(*it)) );
 
-   changed = false;
    return out_buff;
 }
