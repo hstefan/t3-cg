@@ -145,6 +145,7 @@ inline matrix<M - 1, 1> unhomogen(const matrix<M, 1>& v)
    return res;
 }
 
+/*
 template <unsigned int M>
 matrix<M - 1, 1> operator matrix<M, 1>(const matrix<M, 1>& v)
 {
@@ -152,7 +153,7 @@ matrix<M - 1, 1> operator matrix<M, 1>(const matrix<M, 1>& v)
    for(unsigned int i = 0; i < M - 1; ++i)
       res[i] = v[i];
    return res;
-}
+}*/
 
 
 } //namespace math
