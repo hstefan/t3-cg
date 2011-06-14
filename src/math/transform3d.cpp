@@ -83,13 +83,18 @@ mat4d scaleMatrix(float sx, float sy, float sz)
 {
    mat4d m  = {
       {
-            sx, 0  , 0 , sx,
-            0 , sy , 0 , sy,
-            0 , 0  , sz, sz,
-            0,  0  , 0 ,  1
+            sx, 0  , 0 , 0,
+            0 , sy , 0 , 0,
+            0 , 0  , sz, 0,
+            0,  0  , 0 , 1
       }
    };
    return m;
+}
+
+mat4d identifyMatrix()
+{
+   return scaleMatrix(1.f, 1.f, 1.f);
 }
 
 }
