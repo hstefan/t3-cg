@@ -45,6 +45,11 @@ public:
    template <class InputIterator>
    TransformStack(InputIterator begin, InputIterator end);
 
+   TransformStack();
+
+   template <class InputIterator>
+   void setVertex(InputIterator begin, InputIterator end);
+
    void pushYaw(float angle);
    void pushRoll(float angle);
    void pushPitch(float angle);

@@ -28,6 +28,7 @@
 #define HSTEFAN_SCENE_CANVAS_HPP
 
 #include <SCV/Canvas.h>
+#include "../util/TransformStack.hpp"
 
 namespace hstefan
 {
@@ -54,11 +55,13 @@ public:
 
    SceneCanvas(const scv::Point& po, const scv::Point& pf);
 
-   void update( void );
-   void render( void );
-   void onKeyUp( const scv::KeyEvent &evt );
-   void onMouseWheel( const scv::MouseEvent &evt );
-   void onKeyPressed( const scv::KeyEvent &evt ) ;
+   void update(void);
+   void render(void);
+   void onKeyUp(const scv::KeyEvent &evt);
+   void onMouseWheel(const scv::MouseEvent &evt);
+   void onKeyPressed(const scv::KeyEvent &evt);
+private:
+   util::TransformStack transforms;
 };
 
 } //namespace gui
