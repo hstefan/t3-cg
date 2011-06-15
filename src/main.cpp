@@ -40,8 +40,7 @@ int main()
    hstefan::gui::SidePanel* panel = new hstefan::gui::SidePanel(scv::Point(10, 600 - 65), 
       scv::Point(375, 600 - 10), canvas);
    canvas->onPerspectiveSelection();
-   //scv::Button* b = new scv::Button(scv::Point(400, 300), "Clique!");
-   //ker->addComponent(b);
+   ker->setWindowTitle("T3 - Computacao Grafica");
    ker->addComponent(canvas);
    ker->addComponent(panel);
    ker->setFramesPerSecond(30.f);

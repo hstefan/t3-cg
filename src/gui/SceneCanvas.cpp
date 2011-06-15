@@ -33,7 +33,7 @@ using namespace hstefan::gui;
 using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf), trans(), model(), pace_x(0.7f), pace_y(0.7f), pace_z(5.f), yaw_angle(3.1415f/50.f), 
+   : Canvas(po, pf), trans(), model(), pace_x(5.f), pace_y(5.f), pace_z(5.f), yaw_angle(3.1415f/50.f), 
    roll_angle(3.1415f/50.f), pitch_angle(3.1415f/50.f)
 {
    loadModel();
@@ -173,6 +173,7 @@ void SceneCanvas::loadModel()
    model.push_back(makeVec(0.5f, 0.5f, 0.5f));
    model.push_back(makeVec(0.5f, -0.5f, 0.5f));
    model.push_back(makeVec(-0.5f, -0.5f, 0.5f));
+
    model.push_back(makeVec(-0.5f, 0.5f, -0.5f));
    model.push_back(makeVec(0.5f, 0.5f, -0.5f));
    model.push_back(makeVec(0.5f, -0.5f, -0.5f));
@@ -237,7 +238,7 @@ void SceneCanvas::onYawRotationAClock()
 
 void SceneCanvas::onPitchRotationClock()
 {
-   rotateCamera(0.f, 0.f, -pitch_angle);
+   rotateCamera(0.f, 0.f, pitch_angle);
 }
 
 void SceneCanvas::onPitchRotationAClock()
