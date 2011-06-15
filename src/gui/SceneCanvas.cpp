@@ -33,7 +33,7 @@ using namespace hstefan::gui;
 using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf), trans(), model(), pace_x(0.07f), pace_y(0.07f), pace_z(0.02f) 
+   : Canvas(po, pf), trans(), model(), pace_x(0.07f), pace_y(0.07f), pace_z(5.f), yaw_angle(1.f) 
 {
    loadModel();
    initCam();
@@ -44,7 +44,7 @@ void SceneCanvas::render( void )
 {
    trans.pushScale(40.f, 40.f, 40.f);
    trans.pushTranslate(400.f, 300.f, 0.f);
-   trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up));
+   trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
    trans.pushCustom(perspecProj(1.f/800.f));
 
    auto m = *(trans.apply());
@@ -157,45 +157,41 @@ void SceneCanvas::initCam()
    cam.up = makeVec(0.f, 1.f, 0.f);
    cam.center = makeVec(0.f, 0.f, 0.f);
    cam.eye = makeVec(0.f, 0.f, 1.f);
+   cam.dir = normalize(cam.center - cam.eye);
+   cam.right = normalize(cross(cam.dir, cam.up));
 }
 
 
 void SceneCanvas::onMoveForward()
 {
-   vec4 aux = translationMatrix(0.f, 0.f, pace_z)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye += normalize(cam.dir)*pace_z;
 }
 
 void SceneCanvas::onMoveBackward()
 {
-   vec4 aux = translationMatrix(0.f, 0.f, -pace_z)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye -= normalize(cam.dir)*pace_z;
 }
 void SceneCanvas::onMoveLeft()
 {
-   vec4 aux = translationMatrix(-pace_x, 0.f, 0.f)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye -= normalize(cam.right)*pace_z;
 }
 void SceneCanvas::onMoveRight()
 {
-   vec4 aux = translationMatrix(pace_x, 0.f, 0.f)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye += normalize(cam.right)*pace_z;
 }
 void SceneCanvas::onMoveUpward()
 {
-   vec4 aux = translationMatrix(0.f, pace_y, 0.f)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye += normalize(cam.up)*pace_z;
 }
 void SceneCanvas::onMoveDownward()
 {
-   vec4 aux = translationMatrix(0.f, pace_y, 0.f)*homogen(cam.eye);
-   cam.eye = unhomogen(aux);
+   cam.eye -= normalize(cam.up)*pace_z;
 }
 
 void SceneCanvas::onYawRotationClock()
 {
    vec4 aux = yawRotationMatrix(toClockwise(yaw_angle))*homogen(cam.up);
-   cam.eye = unhomogen(aux);
+   cam.up = unhomogen(aux);
 }
 
 void SceneCanvas::onYawRotationAClock()

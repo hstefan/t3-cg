@@ -71,7 +71,6 @@ TransformStack::TransformStack(InputIterator begin, InputIterator end)
 {
    out_buff = new std::vector<vertex_type>();
    out_buff->reserve(vertex_buff.size());
-   //transformations.push(math::identityMatrix());
 }
 
 template <class InputIterator>

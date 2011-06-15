@@ -68,6 +68,8 @@ protected:
       math::vec3 up;
       math::vec3 center;
       math::vec3 eye;
+      math::vec3 dir;
+      math::vec3 right; 
    };
 
    void onMoveForward();
