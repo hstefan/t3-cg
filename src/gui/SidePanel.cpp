@@ -25,10 +25,12 @@
  */
 
 #include "SidePanel.hpp"
+#include "ProjRadioButton.hpp"
 #include <algorithm>
+#include "ProjRadioButton.hpp"
 using namespace hstefan::gui;
 
-SidePanel::SidePanel(const scv::Point& po, const scv::Point& pf)
+SidePanel::SidePanel(const scv::Point& po, const scv::Point& pf, SceneCanvas* canvas)
    : scv::Panel(po, pf), group(new scv::ButtonGroup()), pers(0), ortho(0), ortho_f(0), 
    pers_f(0), label_top(0), label_middle(0), label_bottom(0), last_choice(0)
 {
@@ -36,9 +38,9 @@ SidePanel::SidePanel(const scv::Point& po, const scv::Point& pf)
    scv::Point p(0, 0);
    p.translateX(DEFAULT_MARGIN);
    p.translateY(DEFAULT_MARGIN);
-   pers = new scv::RadioButton(p, true,  "Perspectiva");
+   pers = new ProjRadioButton(p, "Pespectiva", true, canvas, ProjRadioButton::PESPECTIVE);
    p.translateY(pers->getHeight() + DEFAULT_MARGIN);
-   ortho = new  scv::RadioButton(p, false, "Ortogonal");
+   ortho = new ProjRadioButton(p, "Ortografica", false, canvas, ProjRadioButton::ORTHOGONAL);
    p.translateY(-(pers->getHeight() + DEFAULT_MARGIN));
 
    p.translateX(std::max(pers->getWidth(), ortho->getWidth()) + 30);

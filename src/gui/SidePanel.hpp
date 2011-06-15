@@ -27,6 +27,7 @@
 #ifndef HSTEFAN_SIDE_PANEL_HPP
 #define HSTEFAN_SIDE_PANEL_HPP
 
+#include "SceneCanvas.hpp"
 #include <SCV/Panel.h>
 #include <SCV/ButtonGroup.h>
 #include <SCV/RadioButton.h>
@@ -44,12 +45,13 @@ public:
    
    static const int DEFAULT_MARGIN = 10;
 
-   SidePanel(const scv::Point& po, const scv::Point& pf);
+   SidePanel(const scv::Point& po, const scv::Point& pf, SceneCanvas* canvas);
    ~SidePanel();
 
    void onMouseClick(const scv::MouseEvent &evt );
    inline void setOrthoFunction(void (*ortho_f)());
    inline void setPersFunction(void (*pers_f)());
+ 
 private:
    scv::ButtonGroup* group; //radio buttons para selecionar o tipo da projecao
    scv::RadioButton* pers;

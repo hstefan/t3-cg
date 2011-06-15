@@ -24,26 +24,42 @@
  * Matricula: 2910182
  */
 
-#include <SCV/Button.h>
-#include <SCV/Kernel.h>
-#include "gui/SceneCanvas.hpp"
-#include "gui/SidePanel.hpp"
-#include <iostream>
+#ifndef HSTEFAN_PROJRADIOBUTTON_HPP
+#define HSTEFAN_PROJRADIOBUTTON_HPP
 
-int main() 
+#include <SCV/Panel.h>
+#include <SCV/ButtonGroup.h>
+#include <SCV/RadioButton.h>
+#include "../gui/SceneCanvas.hpp"
+
+namespace hstefan
 {
-   scv::Kernel* ker = scv::Kernel::getInstance();
-   scv::ColorScheme* scheme = scv::ColorScheme::getInstance();
-   scheme->loadScheme(scv::ColorScheme::clean);
-   ker->setWindowSize(800, 600);
-   hstefan::gui::SceneCanvas* canvas = new hstefan::gui::SceneCanvas(scv::Point(0,0), scv::Point(800, 600));
-   hstefan::gui::SidePanel* panel = new hstefan::gui::SidePanel(scv::Point(10, 600 - 65), 
-      scv::Point(375, 600 - 10), canvas);
-   canvas->onPerspectiveSelection();
-   //scv::Button* b = new scv::Button(scv::Point(400, 300), "Clique!");
-   //ker->addComponent(b);
-   ker->addComponent(canvas);
-   ker->addComponent(panel);
-   ker->setFramesPerSecond(30.f);
-   ker->run();
+namespace gui
+{
+
+class ProjRadioButton : public scv::RadioButton
+{
+private:
+   SceneCanvas* canvas;
+   char type;
+public:
+   static const char PESPECTIVE = 0;
+   static const char ORTHOGONAL = 1;
+   
+   void onMouseClick( const scv::MouseEvent &evt ) 
+   {
+      if(type == PESPECTIVE)
+         canvas->onPerspectiveSelection();
+      else if (type == ORTHOGONAL)
+         canvas->onOrtoghonalSelection();
+   }
+
+  ProjRadioButton(scv::Point pos, std::string title, bool state, SceneCanvas* canvas, char type)
+     : scv::RadioButton(pos, state, title), canvas(canvas), type(type)
+  {}
+};
+
 }
+}
+
+#endif

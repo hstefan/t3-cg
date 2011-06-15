@@ -93,6 +93,7 @@
     <ClCompile Include="src\util\TransformStack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gui\ProjRadioButton.hpp" />
     <ClInclude Include="src\gui\SceneCanvas.hpp" />
     <ClInclude Include="src\gui\SidePanel.hpp" />
     <ClInclude Include="src\math\camera.hpp" />

@@ -54,12 +54,18 @@ public:
    static const char CLOCKWISE_ROLL_K   = 'n';
    static const char ANTICLOCKW_ROLL_K  = 'm';
 
+   static const char ORTHOGONAL_PROJ = 1;
+   static const char PERSPECTIVE_PROJ = 2;
+
    SceneCanvas(const scv::Point& po, const scv::Point& pf);
 
    void render(void);
    void onKeyUp(const scv::KeyEvent &evt);
    void onMouseWheel(const scv::MouseEvent &evt);
    void onKeyPressed(const scv::KeyEvent &evt);
+
+   void onOrtoghonalSelection();
+   void onPerspectiveSelection();
 protected:
    void loadModel();
    void loadGround();
@@ -96,6 +102,7 @@ private:
    float roll_angle;
    float pitch_angle;
 
+   char projection;
    util::TransformStack trans;
    util::TransformStack ground_trans;
    std::vector<math::vec3> model;

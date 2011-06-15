@@ -45,6 +45,9 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
 
 void SceneCanvas::render( void ) 
 {
+   mat4d proj = perspecProj(1.f/800.f);
+   if(projection == ORTHOGONAL_PROJ)
+      proj = orthogonalProj();
    glColor3f(0.f, 0.f, 0.f);
    glBegin(GL_QUADS);
       glVertex2f(0.f, 0.f);
@@ -56,7 +59,7 @@ void SceneCanvas::render( void )
    ground_trans.pushScale(800.f, 1.f, 800.f);
    ground_trans.pushTranslate(400.f, 300.f, 0.f);
    ground_trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
-   ground_trans.pushCustom(perspecProj(1.f/800.f));
+   ground_trans.pushCustom(proj);
    auto g = *ground_trans.apply();
    glColor3f(34.f/255.f, 139.f/255.f, 34.f/255.f);
    glBegin(GL_QUADS);
@@ -70,7 +73,7 @@ void SceneCanvas::render( void )
    trans.pushTranslate(400.f, 300.f, 0.f);
    trans.pushTranslate(0.f, 30.f, 0.f);
    trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
-   trans.pushCustom(perspecProj(1.f/800.f));
+   trans.pushCustom(proj);
 
    auto m = *(trans.apply());
 
@@ -258,4 +261,15 @@ void SceneCanvas::rotateCamera(float xa, float ya, float za)
    cam.dir = unhomogen(res*homogen(cam.dir));
    cam.up = unhomogen(res*homogen(cam.up));
    cam.right = unhomogen(res*homogen(cam.right));
+}
+
+void SceneCanvas::onOrtoghonalSelection()
+{
+   projection = ORTHOGONAL_PROJ;
+}
+
+void SceneCanvas::onPerspectiveSelection()
+{
+   projection = PERSPECTIVE_PROJ;
+   std::cout << "oi";
 }
