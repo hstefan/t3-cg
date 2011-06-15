@@ -42,12 +42,10 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
 
 void SceneCanvas::render( void ) 
 {
-   //model transform
-   //trans.pushTranslate(0.5f, 0.5f, 0.f);
-   trans.pushScale(200.f, 200.f, 1.f);
+   trans.pushScale(40.f, 40.f, 40.f);
    trans.pushTranslate(400.f, 300.f, 0.f);
    trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up));
-   trans.pushCustom(orthogonalProj());
+   trans.pushCustom(perspecProj(1.f/800.f));
 
    auto m = *(trans.apply());
 
@@ -157,8 +155,8 @@ void SceneCanvas::loadModel()
 void SceneCanvas::initCam()
 {
    cam.up = makeVec(0.f, 1.f, 0.f);
-   cam.center = makeVec(.0f, .0f, .0f);
-   cam.eye = makeVec(.0f, .1f, .1f);
+   cam.center = makeVec(0.f, 0.f, 0.f);
+   cam.eye = makeVec(0.f, 0.f, 1.f);
 }
 
 
