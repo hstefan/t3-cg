@@ -207,30 +207,36 @@ void SceneCanvas::onMoveDownward()
 
 void SceneCanvas::onYawRotationClock()
 {
-
+   vec4 aux = yawRotationMatrix(toClockwise(yaw_angle))*homogen(cam.up);
+   cam.eye = unhomogen(aux);
 }
 
 void SceneCanvas::onYawRotationAClock()
 {
-
+   vec4 aux = yawRotationMatrix(yaw_angle)*homogen(cam.up);
+   cam.up = unhomogen(aux);
 }
 
 void SceneCanvas::onPitchRotationClock()
 {
-
+   vec4 aux = pitchRotationMatrix(toClockwise(pitch_angle))*homogen(cam.up);
+   cam.up = unhomogen(aux);
 }
 
 void SceneCanvas::onPitchRotationAClock()
 {
-
+   vec4 aux = pitchRotationMatrix(pitch_angle)*homogen(cam.up);
+   cam.up = unhomogen(aux);
 }
 
 void SceneCanvas::onRollRotationClock()
 {
-
+   vec4 aux = rollRotationMatrix(toClockwise(roll_angle))*homogen(cam.up);
+   cam.up = unhomogen(aux);
 }
 
 void SceneCanvas::onRollRotationAClock()
 {
-
+   vec4 aux = rollRotationMatrix(roll_angle)*homogen(cam.up);
+   cam.up = unhomogen(aux);
 }

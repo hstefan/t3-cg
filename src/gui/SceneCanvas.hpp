@@ -83,10 +83,19 @@ protected:
    void onPitchRotationAClock();
    void onRollRotationClock();
    void onRollRotationAClock();
+
+   inline float toClockwise(float angle)
+   {
+      return 360.f - angle;
+   }
 private:
    float pace_x;
    float pace_y;
    float pace_z;
+   float yaw_angle;
+   float roll_angle;
+   float pitch_angle;
+
    util::TransformStack trans;
    std::vector<math::vec3> model;
    Camera cam;
