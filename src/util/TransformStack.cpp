@@ -28,6 +28,7 @@
 #include "../math/transform3d.hpp"
 
 using namespace hstefan::util;
+using namespace hstefan;
 
 TransformStack::TransformStack()
    : out_buff(new std::vector<vertex_type>()), vertex_buff(), transformations()
