@@ -130,16 +130,22 @@ void SceneCanvas::onKeyPressed( const scv::KeyEvent &evt )
       onMoveDownward();
       break;
    case CLOCKWISE_YAW_K    : // rotacao YAW clockwise
+      onYawRotationClock();
       break; 
    case ANTICLOCKW_YAW_K   : // rotacao YAY anticlockwise
+      onYawRotationAClock();
       break;
    case CLOCKWISE_PITCH_K  : // rotacao pitch clockwise
+      onPitchRotationClock();
       break; 
    case ANTICLOCKW_PITCH_K : // rotacao pitch anticlockwise
+      onPitchRotationAClock();
       break;
    case CLOCKWISE_ROLL_K   : // rotacao roll clockwise
+      onRollRotationClock();
       break;
    case ANTICLOCKW_ROLL_K  : // rotacao roll anticlockwise
+      onRollRotationAClock();
       break;
    }
 }
@@ -197,4 +203,34 @@ void SceneCanvas::onMoveDownward()
 {
    vec4 aux = translationMatrix(0.f, pace_y, 0.f)*homogen(cam.eye);
    cam.eye = unhomogen(aux);
+}
+
+void SceneCanvas::onYawRotationClock()
+{
+
+}
+
+void SceneCanvas::onYawRotationAClock()
+{
+
+}
+
+void SceneCanvas::onPitchRotationClock()
+{
+
+}
+
+void SceneCanvas::onPitchRotationAClock()
+{
+
+}
+
+void SceneCanvas::onRollRotationClock()
+{
+
+}
+
+void SceneCanvas::onRollRotationAClock()
+{
+
 }

@@ -76,6 +76,13 @@ protected:
    void onMoveRight();
    void onMoveUpward();
    void onMoveDownward();
+   
+   void onYawRotationClock();
+   void onYawRotationAClock();
+   void onPitchRotationClock();
+   void onPitchRotationAClock();
+   void onRollRotationClock();
+   void onRollRotationAClock();
 private:
    float pace_x;
    float pace_y;
