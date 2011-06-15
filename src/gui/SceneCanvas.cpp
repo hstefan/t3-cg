@@ -33,7 +33,7 @@ using namespace hstefan::gui;
 using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf), trans(), model()
+   : Canvas(po, pf), trans(), model(), pace_x(0.07f), pace_y(0.07f), pace_z(0.02f) 
 {
    loadModel();
    initCam();
@@ -43,28 +43,16 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
 void SceneCanvas::render( void ) 
 {
    //model transform
-   trans.pushScale(100, 100, 100);
-   trans.pushTranslate(400, 400, 20);
-   
-   //view/camera transform
+   //trans.pushTranslate(0.5f, 0.5f, 0.f);
+   trans.pushScale(200.f, 200.f, 1.f);
+   trans.pushTranslate(400.f, 300.f, 0.f);
    trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up));
-   //projection transform
    trans.pushCustom(orthogonalProj());
-   
-   //divide by w
-   //window transform
-   mat4d mat = {{
-      1, 0,     0    , 0,
-      0, 1,     0    , 0,
-      0, 0, 1.f/30.f , 0,
-      0, 0,     0    , 1
-   }};
-   trans.pushCustom(mat);
 
    auto m = *(trans.apply());
 
    glColor3f(1.0f, 0.f, 0.f);
-
+   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glBegin(GL_QUADS);
       glVertex2f(m[0][0], m[0][1]);
       glVertex2f(m[1][0], m[1][1]);
@@ -96,6 +84,7 @@ void SceneCanvas::render( void )
       glVertex2f(m[7][0], m[7][1]);
       glVertex2f(m[3][0], m[3][1]);
    glEnd();
+   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void SceneCanvas::onKeyUp( const scv::KeyEvent &evt ) 
@@ -168,8 +157,8 @@ void SceneCanvas::loadModel()
 void SceneCanvas::initCam()
 {
    cam.up = makeVec(0.f, 1.f, 0.f);
-   cam.center = makeVec(0.f, 0.f, 0.f);
-   cam.eye = makeVec(0.f, 0.f, 0.f);
+   cam.center = makeVec(.0f, .0f, .0f);
+   cam.eye = makeVec(.0f, .1f, .1f);
 }
 
 
