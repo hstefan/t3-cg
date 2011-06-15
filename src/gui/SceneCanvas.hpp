@@ -62,6 +62,7 @@ public:
    void onKeyPressed(const scv::KeyEvent &evt);
 protected:
    void loadModel();
+   void loadGround();
    void initCam();
    struct Camera
    {
@@ -86,11 +87,6 @@ protected:
    void onRollRotationClock();
    void onRollRotationAClock();
 
-   inline float toClockwise(float angle)
-   {
-      return 360.f - angle;
-   }
-
    void rotateCamera(float xa, float ya, float za);
 private:
    float pace_x;
@@ -101,7 +97,9 @@ private:
    float pitch_angle;
 
    util::TransformStack trans;
+   util::TransformStack ground_trans;
    std::vector<math::vec3> model;
+   std::vector<math::vec3> ground;
    Camera cam;
 };
 

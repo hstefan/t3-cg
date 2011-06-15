@@ -33,30 +33,55 @@ using namespace hstefan::gui;
 using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf), trans(), model(), pace_x(0.7f), pace_y(0.7f), pace_z(5.f), yaw_angle(3.1415f/30.f), 
-   roll_angle(3.1415f/30.f), pitch_angle(3.1415f/30.f)
+   : Canvas(po, pf), trans(), model(), pace_x(0.7f), pace_y(0.7f), pace_z(5.f), yaw_angle(3.1415f/50.f), 
+   roll_angle(3.1415f/50.f), pitch_angle(3.1415f/50.f)
 {
    loadModel();
+   loadGround();
    initCam();
    trans.setVertexGroup(model.begin(), model.end());
+   ground_trans.setVertexGroup(ground.begin(), ground.end());
 }
 
 void SceneCanvas::render( void ) 
 {
+   glColor3f(0.f, 0.f, 0.f);
+   glBegin(GL_QUADS);
+      glVertex2f(0.f, 0.f);
+      glVertex2f(800.f, 0.f);
+      glVertex2f(800.f, 600.f);
+      glVertex2f(0.f, 600.f);
+   glEnd();
+   
+   ground_trans.pushScale(800.f, 1.f, 800.f);
+   ground_trans.pushTranslate(400.f, 300.f, 0.f);
+   ground_trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
+   ground_trans.pushCustom(perspecProj(1.f/800.f));
+   auto g = *ground_trans.apply();
+   glColor3f(34.f/255.f, 139.f/255.f, 34.f/255.f);
+   glBegin(GL_QUADS);
+      glVertex2f(g[0][0], g[0][1]);
+      glVertex2f(g[1][0], g[1][1]);
+      glVertex2f(g[2][0], g[2][1]);
+      glVertex2f(g[3][0], g[3][1]);
+   glEnd();
+
    trans.pushScale(60.f, 60.f, 60.f);
    trans.pushTranslate(400.f, 300.f, 0.f);
+   trans.pushTranslate(0.f, 30.f, 0.f);
    trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
    trans.pushCustom(perspecProj(1.f/800.f));
 
    auto m = *(trans.apply());
 
-   glColor3f(1.0f, 0.f, 0.f);
+   glColor3f(178.f/255.f, 34.f/255.f, 34.f/255.f);
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   glLineWidth(2.0f);
    glBegin(GL_QUADS);
       glVertex2f(m[0][0], m[0][1]);
       glVertex2f(m[1][0], m[1][1]);
       glVertex2f(m[2][0], m[2][1]);
-      glVertex2f(m[0][0], m[3][1]);
+      glVertex2f(m[3][0], m[3][1]);
 
       glVertex2f(m[0][0], m[0][1]);
       glVertex2f(m[4][0], m[4][1]);
@@ -141,16 +166,23 @@ void SceneCanvas::onKeyPressed( const scv::KeyEvent &evt )
 void SceneCanvas::loadModel()
 {
    model.reserve(8);
-
    model.push_back(makeVec(-0.5f, 0.5f, 0.5f));
    model.push_back(makeVec(0.5f, 0.5f, 0.5f));
    model.push_back(makeVec(0.5f, -0.5f, 0.5f));
    model.push_back(makeVec(-0.5f, -0.5f, 0.5f));
-
    model.push_back(makeVec(-0.5f, 0.5f, -0.5f));
    model.push_back(makeVec(0.5f, 0.5f, -0.5f));
    model.push_back(makeVec(0.5f, -0.5f, -0.5f));
    model.push_back(makeVec(-0.5f, -0.5f, -0.5f));
+}
+
+void SceneCanvas::loadGround()
+{   
+   ground.reserve(4);
+   ground.push_back(makeVec(-0.5f, 0.f, 0.5f));
+   ground.push_back(makeVec(0.5f , 0.f, 0.5f));
+   ground.push_back(makeVec(0.5f, 0.f, -0.5f));
+   ground.push_back(makeVec(-0.5f, 0.f, -0.5f));
 }
 
 void SceneCanvas::initCam()
@@ -172,6 +204,7 @@ void SceneCanvas::onMoveBackward()
 {
    cam.eye -= normalize(cam.dir)*pace_z;
 }
+
 void SceneCanvas::onMoveLeft()
 {
    cam.eye -= normalize(cam.right)*pace_z;
