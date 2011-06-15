@@ -33,7 +33,8 @@ using namespace hstefan::gui;
 using namespace hstefan::math;
 
 SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
-   : Canvas(po, pf), trans(), model(), pace_x(0.07f), pace_y(0.07f), pace_z(5.f), yaw_angle(1.f) 
+   : Canvas(po, pf), trans(), model(), pace_x(0.7f), pace_y(0.7f), pace_z(5.f), yaw_angle(3.1415f/30.f), 
+   roll_angle(3.1415f/30.f), pitch_angle(3.1415f/30.f)
 {
    loadModel();
    initCam();
@@ -42,7 +43,7 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
 
 void SceneCanvas::render( void ) 
 {
-   trans.pushScale(40.f, 40.f, 40.f);
+   trans.pushScale(60.f, 60.f, 60.f);
    trans.pushTranslate(400.f, 300.f, 0.f);
    trans.pushCustom(cameraMatrix(cam.eye, cam.center, cam.up, &cam.dir, &cam.right));
    trans.pushCustom(perspecProj(1.f/800.f));
@@ -190,36 +191,38 @@ void SceneCanvas::onMoveDownward()
 
 void SceneCanvas::onYawRotationClock()
 {
-   vec4 aux = yawRotationMatrix(toClockwise(yaw_angle))*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(0.f, -yaw_angle, 0.f);
 }
 
 void SceneCanvas::onYawRotationAClock()
 {
-   vec4 aux = yawRotationMatrix(yaw_angle)*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(0.f, yaw_angle, 0.f);
 }
 
 void SceneCanvas::onPitchRotationClock()
 {
-   vec4 aux = pitchRotationMatrix(toClockwise(pitch_angle))*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(0.f, 0.f, -pitch_angle);
 }
 
 void SceneCanvas::onPitchRotationAClock()
 {
-   vec4 aux = pitchRotationMatrix(pitch_angle)*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(0.f, 0.f, -pitch_angle);
 }
 
 void SceneCanvas::onRollRotationClock()
 {
-   vec4 aux = rollRotationMatrix(toClockwise(roll_angle))*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(-roll_angle, 0.f, 0.f);
 }
 
 void SceneCanvas::onRollRotationAClock()
 {
-   vec4 aux = rollRotationMatrix(roll_angle)*homogen(cam.up);
-   cam.up = unhomogen(aux);
+   rotateCamera(roll_angle, 0.f, 0.f);
+}
+
+void SceneCanvas::rotateCamera(float xa, float ya, float za)
+{
+   mat4d res = pitchRotationMatrix(za)*yawRotationMatrix(ya)*rollRotationMatrix(xa);
+   cam.dir = unhomogen(res*homogen(cam.dir));
+   cam.up = unhomogen(res*homogen(cam.up));
+   cam.right = unhomogen(res*homogen(cam.right));
 }

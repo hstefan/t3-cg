@@ -90,6 +90,8 @@ protected:
    {
       return 360.f - angle;
    }
+
+   void rotateCamera(float xa, float ya, float za);
 private:
    float pace_x;
    float pace_y;
