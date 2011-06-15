@@ -56,7 +56,6 @@ public:
 
    SceneCanvas(const scv::Point& po, const scv::Point& pf);
 
-   void update(void);
    void render(void);
    void onKeyUp(const scv::KeyEvent &evt);
    void onMouseWheel(const scv::MouseEvent &evt);
@@ -70,7 +69,17 @@ protected:
       math::vec3 center;
       math::vec3 eye;
    };
+
+   void onMoveForward();
+   void onMoveBackward();
+   void onMoveLeft();
+   void onMoveRight();
+   void onMoveUpward();
+   void onMoveDownward();
 private:
+   float pace_x;
+   float pace_y;
+   float pace_z;
    util::TransformStack trans;
    std::vector<math::vec3> model;
    Camera cam;

@@ -27,6 +27,7 @@
 #include "SceneCanvas.hpp"
 #include "../math/projection.hpp"
 #include "../math/camera.hpp"
+#include "../math/transform3d.hpp"
 
 using namespace hstefan::gui;
 using namespace hstefan::math;
@@ -37,11 +38,6 @@ SceneCanvas::SceneCanvas(const scv::Point& po, const scv::Point& pf)
    loadModel();
    initCam();
    trans.setVertexGroup(model.begin(), model.end());
-}
-
-void SceneCanvas::update( void )
-{
-   //throw std::exception("The method or operation is not implemented.");
 }
 
 void SceneCanvas::render( void ) 
@@ -116,16 +112,22 @@ void SceneCanvas::onKeyPressed( const scv::KeyEvent &evt )
 {
    switch(evt.getKeyCode()) {
    case MOVE_FORWARD_K     : // pra frente
+      onMoveForward();
       break; 
    case MOVE_LEFT_K        : // pra esquerda
+      onMoveLeft();
       break;
    case MOVE_BACKWARD_K    : // pra traz
+      onMoveBackward();
       break; 
    case MOVE_RIGHT_K       : // pra direita
+      onMoveRight();
       break;
    case MOVE_UPWARD_K      : // pra cima
+      onMoveUpward();
       break;
    case MOVE_DOWNWARD_K    : // pra baixo
+      onMoveDownward();
       break;
    case CLOCKWISE_YAW_K    : // rotacao YAW clockwise
       break; 
@@ -162,4 +164,37 @@ void SceneCanvas::initCam()
    cam.up = makeVec(0.f, 1.f, 0.f);
    cam.center = makeVec(0.f, 0.f, 0.f);
    cam.eye = makeVec(0.f, 0.f, 0.f);
+}
+
+
+void SceneCanvas::onMoveForward()
+{
+   vec4 aux = translationMatrix(0.f, 0.f, pace_z)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
+}
+
+void SceneCanvas::onMoveBackward()
+{
+   vec4 aux = translationMatrix(0.f, 0.f, -pace_z)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
+}
+void SceneCanvas::onMoveLeft()
+{
+   vec4 aux = translationMatrix(-pace_x, 0.f, 0.f)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
+}
+void SceneCanvas::onMoveRight()
+{
+   vec4 aux = translationMatrix(pace_x, 0.f, 0.f)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
+}
+void SceneCanvas::onMoveUpward()
+{
+   vec4 aux = translationMatrix(0.f, pace_y, 0.f)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
+}
+void SceneCanvas::onMoveDownward()
+{
+   vec4 aux = translationMatrix(0.f, pace_y, 0.f)*homogen(cam.eye);
+   cam.eye = unhomogen(aux);
 }
